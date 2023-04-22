@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import ReactDOM from 'react-dom'
 import Title from './Title'
 import BtnOption from './BtnOption'
-import Result from './Result' 
+import Statistics from './Statistics'
 
 const App = () => {
   const [good, setGood] = useState(0)
@@ -29,9 +29,7 @@ const App = () => {
       <BtnOption handleClick={neutralHandleClick} option="neutral"/>
       <BtnOption handleClick={badHandleClick} option="bad"/>
       <Title title="Statistics" />
-      <Result option="good" cant={good}/>
-      <Result option="neutral" cant={neutral}/>
-      <Result option="bad" cant={bad}/>
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }

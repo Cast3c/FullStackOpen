@@ -23,12 +23,27 @@ const App = () => {
       name: newName,
       number: newPhone,
     };
-    const person = persons.find((obj) => obj.name === newName);
+    const person = persons.find((obj) => obj.name.toLowerCase() === newName.toLowerCase());
     if (person) {
-      alert(`${newName} is already added to phonebook`);
+      const msg = window.confirm(`${newName} is already added to phonebook, do you want to edit the contact number`);
+      if (msg) {
+        console.log('checking the pass');
+        const updtContact = {...person, number: newContact.number}
+
+        personService
+        .update(updtContact.id, updtContact)
+        .then(returnedPerson => {
+          setPersons(persons.map(person => person.id !== updtContact.id ? person : returnedPerson));
+          setNewName("");
+          setNewPhone("");
+          setFindPerson("");
+        })
+      }
     } else {
-      personService.create(newContact).then((returnedPerson) => {
-        setPersons(persons.concat(newContact));
+      personService
+      .create(newContact)
+      .then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
         setNewName("");
         setNewPhone("");
         setFindPerson("");
@@ -51,6 +66,25 @@ const App = () => {
     console.log(event.target.value);
     setFindPerson(event.target.value);
     setShowName(false);
+  };
+
+  const handleDeletePerson = (id) => {
+    const person = persons.find((p) => p.id === id);
+    const personId = persons.findIndex((p) => p.id === id);
+    console.log(id);
+    if (personId !== -1) {
+      const msg =  window.confirm(
+        `Delete ${person.name}? `
+       )
+
+      if (msg === true ) {
+        personService
+        .erase(id)
+        .then((returnedPerson)=>{
+          setPersons(persons.filter(name=> name.id !== id))
+        })
+      }
+    }
   };
 
   const namesToShow = showName
@@ -77,7 +111,16 @@ const App = () => {
         bug: {newName}
       </div> */}
       <h2>Contacts</h2>
-      <Persons namesToShow={namesToShow} />
+      <ul>
+        {namesToShow.map((name) => (
+          <Persons 
+            key={name.id}
+            namesToShow={name}
+            deletePerson={() => handleDeletePerson(name.id)}
+          />
+        ))}
+      </ul>
+      
     </div>
   );
 };

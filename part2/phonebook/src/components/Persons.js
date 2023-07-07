@@ -15,6 +15,7 @@ const Persons = ({namesToShow, deletePerson}) => {
       <button onClick = {deletePerson}>delete</button>
     </li>
   );
+  
 };
 
 export default Persons

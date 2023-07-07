@@ -6,12 +6,12 @@ import Total from "../Total";
 const Course = ({ courses }) => {
   return (
     <div>
-        <h1>Web development Curriculum</h1>
+      <h1>Web development Curriculum</h1>
       {courses.map((course) => (
         <div key={course.id}>
           <Header courses={course} />
           <Content courses={course} />
-          <Total course={course}/>
+          <Total course={course} />
         </div>
       ))}
     </div>

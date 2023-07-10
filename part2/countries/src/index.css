@@ -35,6 +35,13 @@ img{
   
 }
 
+.iconWeather{
+  max-width: 150px;
+  object-fit: contain;
+  border: none;
+  box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.5);
+}
+
 .dataContainer{
   display: flex;
   justify-content: space-around;

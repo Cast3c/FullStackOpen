@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import countryService from './services/countries';
-import Countries from './components/Countries';
+import CountriesShow from './components/CountriesShow';
 import Filter from './components/Filter';
 
 
@@ -8,7 +8,7 @@ import Filter from './components/Filter';
 const  App = () => {
   const [countries, setCountries ] = useState(null)
   const [countriesShow, setCountriesShow] = useState(true)
-  const [findCountry, setFindCountry] = useState('');
+  const [findCountry, setFindCountry] = useState('');  
 
   useEffect(() => {
     countryService.getCountries()
@@ -19,8 +19,9 @@ const  App = () => {
   }, [])
 
   const handleFindCountry = (event) => {
-    console.log(event.target.value);
-    setFindCountry(event.target.value);
+    console.log(event.target.value)
+    setFindCountry(event.target.value)
+    console.log(countriesShow)
     setCountriesShow(false)
   }
 
@@ -38,10 +39,9 @@ const  App = () => {
       <div>
           <Filter findCountry={findCountry} handleFindCountry={handleFindCountry}/>
           <div>
-            <Countries 
-              filter={findCountry}
+            { countriesShow ? null : <CountriesShow 
               countryToShow={countryToShow}
-            />
+            />}
           </div>
           {/* <h1>Results:{countryToShow.length}</h1> */}
       </div>

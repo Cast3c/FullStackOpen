@@ -1,16 +1,17 @@
 const blogsRouter = require('express').Router()
 const jwt = require('jsonwebtoken')
 const Blog = require('../models/blog')
+const { userExtractor } = require('../utils/middleware')
 const User = require('../models/user')
 
 //Getting token
-const getTokenFrom = request => {
-    const authorization = request.get('authorization')
-    if(authorization && authorization.startsWith('Bearer ')){
-        return authorization.replace('Bearer ', '')
-    }
-    return null
-}
+// const getTokenFrom = request => {
+//     const authorization = request.get('authorization')
+//     if(authorization && authorization.startsWith('Bearer ')){
+//         return authorization.replace('Bearer ', '')
+//     }
+//     return null
+// }
 
 //Getting all blogs 
 blogsRouter.get('/', async (request, response) => { 
@@ -29,14 +30,16 @@ blogsRouter.get('/:id', async (request, response) => {
 })
 
 //Creating a blog
-blogsRouter.post('/', async (request, response ) => {
+blogsRouter.post('/',userExtractor , async (request, response ) => {
     const body = request.body
-    const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
-    if(!decodedToken.id){
-        return response.status(401).json({ error: 'invalid token '})
-    }
+    // const decodedToken = jwt.verify(request.token , process.env.SECRET)
 
-    const user = await User.findById(decodedToken.id)
+    // if(!decodedToken.id){
+    //     return response.status(401).json({ error: 'invalid token '})
+    // }
+    // const user = await User.findById(decodedToken.id)
+
+    const user = request.user
     
     const blog = new Blog({
         title: body.title,
@@ -45,12 +48,12 @@ blogsRouter.post('/', async (request, response ) => {
         likes: body.likes || 0,
         user: user.id
     })
-
     if(!blog.title || !blog.url){
         return response.status(400).json({ error: 'title or url missing ' })
-    }
+    }  
 
-    const savedBlog = await blog.save()  
+    const savedBlog = await blog.save()
+    
     user.blogs = user.blogs.concat(savedBlog._id)
     await user.save()
 

@@ -1,9 +1,9 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2OGU2MDFmYzhkZWFjNTg5NjExNDY3ZGYiLCJpYXQiOjE3NTk5ODE0NzZ9.WCMLHA6y1x6c9J96IGeFB-sJpk39Mzgez9zETE8yJC8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2OGU2MDFmYzhkZWFjNTg5NjExNDY3ZGYiLCJpYXQiOjE3NTk5ODg2MDJ9.f39V_C-CjQ5nuiIYZs0GAd6ydFvIT5EA1huU3-EZhzw
 
 {
-    "title": "Title for test the post 2",
+    "title": "Title for test the post 4",
     "author": "Ricardo",
     "url": "https://nonexisting.com/ricardo'sBlog",
     "likes": 0,

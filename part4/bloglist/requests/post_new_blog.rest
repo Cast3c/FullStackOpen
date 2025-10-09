@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "Title for test the post",
+    "author": "Ricardo",
+    "url": "https://nonexisting.com/ricardo'sBlog",
+    "likes": 0,
+    "userId": "68e5fef68ea1e6f3b15659f0"
+}

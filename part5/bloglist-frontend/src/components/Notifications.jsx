@@ -1,34 +1,33 @@
 const Notifications = ({ message, typeMessage }) => {
-  
-    const notificationStyle = {
+  const notificationStyle = {
     padding: '10px',
     borderRadius: '5px',
     marginBottom: '10px',
     borderStyle: 'solid',
-    borderWidth: '2px',
+    borderWidth: '2px'
   }
 
   const errorStyle = {
     ...notificationStyle,
     color: 'red',
     backgroundColor: '#ffebee',
-    borderColor: 'red',
+    borderColor: 'red'
   }
 
   const successStyle = {
     ...notificationStyle,
     color: 'green',
     backgroundColor: '#e8f5e9',
-    borderColor: 'green',
+    borderColor: 'green'
   }
 
-  if (!message) return null;
+  if (!message) return null
 
   return (
     <div style={typeMessage === 'error' ? errorStyle : successStyle}>
-        {message}
+      {message}
     </div>
   )
 }
 
-export default Notifications;
+export default Notifications

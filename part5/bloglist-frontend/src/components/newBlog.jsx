@@ -9,6 +9,7 @@ const BlogForm = ({ values, handleBlogSubmit, handleChange }) => {
             type="text"
             value={values.title}
             name="title"
+            aria-label= 'title'
             onChange={handleChange}
           />
         </div>
@@ -17,6 +18,7 @@ const BlogForm = ({ values, handleBlogSubmit, handleChange }) => {
           <input
             type="text"
             value={values.author}
+            aria-label="author"
             name="author"
             onChange={handleChange}
           />
@@ -26,14 +28,15 @@ const BlogForm = ({ values, handleBlogSubmit, handleChange }) => {
           <input
             type="text"
             value={values.url}
+            aria-label="url"
             name="url"
             onChange={handleChange}
           />
         </div>
-        <button type="submit">Create blog</button>
+        <button type="submit" aria-label="create blog">Create blog</button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default BlogForm;
+export default BlogForm

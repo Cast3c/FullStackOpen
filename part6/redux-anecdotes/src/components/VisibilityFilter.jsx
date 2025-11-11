@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { filterChange } from "../reducers/filterReducer"
+import { setFilter } from "../reducers/filterReducer"
 
 const VisibilityFilter = () => {
     const dispatch = useDispatch()
@@ -8,7 +8,7 @@ const VisibilityFilter = () => {
             filter
             <input type='text'
                 name='filter'
-                onChange={(event) => dispatch(filterChange(event.target.value))}
+                onChange={(event) => dispatch(setFilter(event.target.value))}
             />
         </div>
     )

@@ -26,5 +26,4 @@ export const showMessage = (message, time = 5) => {
     }
 }
 
-
 export default notificationSlice.reducer

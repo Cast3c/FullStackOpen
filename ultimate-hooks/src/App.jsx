@@ -25,7 +25,7 @@ const useResource = (baseUrl) => {
 
   useEffect(() => {
     getAll()
-  }, [])
+  },[])
 
   const getAll = async () => {
     const response = await axios.get(baseUrl)

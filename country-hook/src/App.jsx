@@ -19,7 +19,6 @@ const useCountry = (name) => {
   const [country, setCountry] = useState(null)
   const countryUrl = 'https://studies.cs.helsinki.fi/restcountries/api/name'
 
-  
 
   useEffect(() => {
     if (!name) {

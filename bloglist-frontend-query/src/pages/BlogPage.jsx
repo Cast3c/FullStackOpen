@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useBlog, useUpdateBlog, useDeleteBlog } from '../hooks/useBlogs'
+import { useBlog, useLikeBlog, useAddComment, useDeleteBlog } from '../hooks/useBlogs'
 import { useUser } from '../contexts/userContext'
+import { useForm } from '../hooks/useForm'
 import { useNotification } from '../contexts/notificationContext'
 import { showNotifications } from '../contexts/notificationActions'
 import Notifications from '../components/Notifications'
@@ -12,8 +13,10 @@ const BlogPage = () => {
   const{ data: blog, isLoading, isError } = useBlog(id)
   const [user] = useUser()
   const [,notificationDispatch] = useNotification()
-  const updateBlogMutation = useUpdateBlog()
+  const likeBlogMutation = useLikeBlog()
+  const commentBlogMutation = useAddComment()
   const deleteBlogMutation = useDeleteBlog()
+  const commentForm = useForm({ comment:'' })
 
   if (isLoading) {
     return (
@@ -38,7 +41,7 @@ const BlogPage = () => {
       likes: blog.likes + 1
     }
 
-    updateBlogMutation.mutate({ id: blog.id, updatedBlog },
+    likeBlogMutation.mutate({ id: blog.id, updatedBlog },
       {
         onSuccess: () => {
           showNotifications(notificationDispatch,
@@ -55,6 +58,32 @@ const BlogPage = () => {
         }
       }
     )
+  }
+
+  const handleAddComment = event => {
+    event.preventDefault()
+
+    if (!commentForm.values.comment.trim()) return
+
+    commentBlogMutation.mutate({ id: blog.id, comment: commentForm.values.comment }, {
+      onSuccess: () => {
+        commentForm.reset()
+        showNotifications(notificationDispatch,
+          'Comment added',
+          'success',
+          3
+        )
+      },
+      onError: () => {
+        commentForm.reset()
+        showNotifications(
+          notificationDispatch,
+          'Error adding comment',
+          'error',
+          5
+        )
+      }
+    })
   }
 
   const handleDelete = () => {
@@ -124,6 +153,52 @@ const BlogPage = () => {
         )}
 
       </div>
+      {/* Comments */}
+      <div className="pt-6 border-t">
+        <h3 className="text-xl font-semibold text-gray-800 mb-4">
+    💬 Comments
+        </h3>
+
+        {/* Add comment form */}
+        <form
+          onSubmit={handleAddComment}
+          className="flex gap-3 mb-6"
+        >
+          <input
+            type="text"
+            name="comment"
+            value={commentForm.values.comment}
+            onChange={commentForm.handleChange}
+            placeholder="Write a comment..."
+            className="flex-1 px-4 py-2 border rounded-lg focus:ring focus:ring-blue-200"
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+      Add
+          </button>
+        </form>
+
+        {/* Comments list */}
+        {blog.comments?.length > 0 ? (
+          <ul className="space-y-3">
+            {blog.comments.map((comment, index) => (
+              <li
+                key={index}
+                className="bg-gray-50 px-4 py-2 rounded-lg text-gray-700"
+              >
+                {comment}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500 text-sm">
+      No comments yet.
+          </p>
+        )}
+      </div>
+
     </div>
   )
 }

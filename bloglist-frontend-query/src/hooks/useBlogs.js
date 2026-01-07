@@ -27,13 +27,24 @@ export const useCreateBlog = () => {
   })
 }
 
-export const useUpdateBlog = () => {
+export const useLikeBlog = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ id, updatedBlog }) => blogService.update(id, updatedBlog),
+    mutationFn: ({ id, updatedBlog }) => blogService.updateLike(id, updatedBlog),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['blogs'] })
+      queryClient.invalidateQueries({ queryKey: ['blog'] })
+    }
+  })
+}
+
+export const useAddComment = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: ({ id, comment }) => blogService.addComment(id, comment),
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['blog'] })
     }
   })

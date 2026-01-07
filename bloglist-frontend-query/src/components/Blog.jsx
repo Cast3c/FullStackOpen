@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useUpdateBlog, useDeleteBlog } from '../hooks/useBlogs'
+import { useLikeBlog, useDeleteBlog } from '../hooks/useBlogs'
 import { useUser } from '../contexts/userContext'
 import { useNotification } from '../contexts/notificationContext'
 import { showNotifications } from '../contexts/notificationActions'
@@ -8,7 +8,7 @@ const BlogList = ({ blog }) => {
   const [showInfo, setShowInfo] = useState(false)
   const [buttonLabel, setButtonLabel] = useState(true)
   const [ user ] = useUser()
-  const updateBlogMutation = useUpdateBlog()
+  const updateBlogMutation = useLikeBlog()
   const deleteBlogMutation = useDeleteBlog()
   const [, notificationDispatch] = useNotification()
 

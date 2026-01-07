@@ -1,0 +1,29 @@
+import { createContext, useContext, useReducer } from 'react'
+
+const UserContext = createContext()
+
+const userReducer = (state, action) => {
+  switch (action.type) {
+  case 'LOGIN':
+    return action.payload
+  case 'LOGOUT':
+    return null
+  default:
+    return state
+  }
+}
+
+export const UserProvider = ({ children }) => {
+  const [user, dispatch] = useReducer(userReducer, null)
+
+  return (
+    <UserContext.Provider value={[user, dispatch]}>
+      {children}
+    </UserContext.Provider>
+  )
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const useUser = () => {
+  return useContext(UserContext)
+}
